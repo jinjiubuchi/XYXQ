@@ -1,82 +1,68 @@
-// Audio files for the words
-const audioFiles = {
-    apple: new Audio('https://www.soundjay.com/button/beep-07.wav'),
-    dog: new Audio('https://www.soundjay.com/button/beep-09.wav'),
-    cat: new Audio('https://www.soundjay.com/button/beep-10.wav'),
-    banana: new Audio('https://www.soundjay.com/button/beep-12.wav'),
-    ball: new Audio('https://www.soundjay.com/button/beep-13.wav')
+// Food data with categories and nutritional details
+const foods = {
+    fruits: [
+        { id: 'apple', name: 'Apple', image: 'https://via.placeholder.com/150?text=Apple', calories: '52 kcal', protein: '0.3g', fat: '0.2g', carbohydrates: '14g', category: 'Fruits' },
+        { id: 'banana', name: 'Banana', image: 'https://via.placeholder.com/150?text=Banana', calories: '96 kcal', protein: '1.3g', fat: '0.3g', carbohydrates: '27g', category: 'Fruits' },
+        { id: 'orange', name: 'Orange', image: 'https://via.placeholder.com/150?text=Orange', calories: '62 kcal', protein: '1.2g', fat: '0.2g', carbohydrates: '15g', category: 'Fruits' }
+    ],
+    vegetables: [
+        { id: 'carrot', name: 'Carrot', image: 'https://via.placeholder.com/150?text=Carrot', calories: '41 kcal', protein: '0.9g', fat: '0.2g', carbohydrates: '10g', category: 'Vegetables' },
+        { id: 'broccoli', name: 'Broccoli', image: 'https://via.placeholder.com/150?text=Broccoli', calories: '55 kcal', protein: '3.7g', fat: '0.6g', carbohydrates: '11g', category: 'Vegetables' }
+    ],
+    snacks: [
+        { id: 'chips', name: 'Chips', image: 'https://via.placeholder.com/150?text=Chips', calories: '152 kcal', protein: '2g', fat: '10g', carbohydrates: '15g', category: 'Snacks' },
+        { id: 'soda', name: 'Soda', image: 'https://via.placeholder.com/150?text=Soda', calories: '150 kcal', protein: '0g', fat: '0g', carbohydrates: '39g', category: 'Snacks' }
+    ]
 };
 
-// Play audio for the word
-function playAudio(word) {
-    audioFiles[word].play();
-}
+// Display food items based on category
+function filterFood(category) {
+    const foodList = document.getElementById('food-list');
+    foodList.innerHTML = ''; // Clear current list
 
-// Word Matching Game functionality
-const words = ['apple', 'dog', 'cat', 'banana', 'ball'];
-let gameItems = [];
-let gameStarted = false;
-
-// Function to start the matching game
-function startGame() {
-    if (gameStarted) return;
-    
-    gameStarted = true;
-    document.getElementById('gameFeedback').textContent = 'Drag the images to the correct word!';
-    const gameArea = document.getElementById('gameArea');
-    
-    // Randomize the game items
-    const shuffledWords = shuffle([...words]);
-    
-    // Generate game items for the game area
-    shuffledWords.forEach(word => {
-        const gameItem = document.createElement('div');
-        gameItem.classList.add('game-item');
-        gameItem.setAttribute('draggable', 'true');
-        gameItem.textContent = word.charAt(0).toUpperCase() + word.slice(1);
-        gameItem.setAttribute('data-word', word);
-        gameItem.ondragstart = (event) => dragStart(event);
-        gameArea.appendChild(gameItem);
-    });
-
-    // Generate word containers for drag targets
-    const targets = words.map(word => {
-        const target = document.createElement('div');
-        target.classList.add('game-item');
-        target.textContent = word.charAt(0).toUpperCase() + word.slice(1);
-        target.setAttribute('data-word', word);
-        target.ondragover = (event) => event.preventDefault();
-        target.ondrop = (event) => drop(event);
-        return target;
-    });
-
-    targets.forEach(target => gameArea.appendChild(target));
-}
-
-// Shuffle function for randomizing the words
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-// Drag Start Function
-function dragStart(event) {
-    event.dataTransfer.setData('text', event.target.getAttribute('data-word'));
-}
-
-// Drop Function
-function drop(event) {
-    const draggedWord = event.dataTransfer.getData('text');
-    const targetWord = event.target.getAttribute('data-word');
-
-    if (draggedWord === targetWord) {
-        event.target.style.backgroundColor = 'green';
-        document.getElementById('gameFeedback').textContent = 'Correct! Well done!';
+    let foodItems = [];
+    if (category === 'all') {
+        foodItems = [...foods.fruits, ...foods.vegetables, ...foods.snacks];
     } else {
-        event.target.style.backgroundColor = 'red';
-        document.getElementById('gameFeedback').textContent = 'Try again!';
+        foodItems = foods[category];
     }
+
+    foodItems.forEach(food => {
+        const foodElement = document.createElement('div');
+        foodElement.classList.add('food-item');
+        foodElement.id = food.id;
+        foodElement.innerHTML = `
+            <img src="${food.image}" alt="${food.name}">
+            <p>${food.name}</p>
+        `;
+        foodElement.addEventListener('click', () => showFoodDetails(food));
+        foodList.appendChild(foodElement);
+    });
 }
+
+// Show food details in modal
+function showFoodDetails(food) {
+    document.getElementById('food-name').textContent = food.name;
+    document.getElementById('calories').textContent = food.calories;
+    document.getElementById('protein').textContent = food.protein;
+    document.getElementById('fat').textContent = food.fat;
+    document.getElementById('carbohydrates').textContent = food.carbohydrates;
+    document.getElementById('food-category').textContent = food.category;
+
+    document.getElementById('food-modal').style.display = 'flex';
+}
+
+// Close modal
+document.querySelector('.close-btn').addEventListener('click', () => {
+    document.getElementById('food-modal').style.display = 'none';
+});
+
+// Close modal if clicked outside of modal
+window.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('food-modal')) {
+        document.getElementById('food-modal').style.display = 'none';
+    }
+});
+
+// Initialize page with "all" category food items
+window.onload = () => filterFood('all');
