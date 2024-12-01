@@ -1,25 +1,42 @@
-// Get all the word-item elements
-const wordItems = document.querySelectorAll('.word-item');
+// Audio files for the words
+const audioFiles = {
+    apple: new Audio('https://www.soundjay.com/button/beep-07.wav'),
+    dog: new Audio('https://www.soundjay.com/button/beep-09.wav'),
+    cat: new Audio('https://www.soundjay.com/button/beep-10.wav'),
+    banana: new Audio('https://www.soundjay.com/button/beep-12.wav'),
+    ball: new Audio('https://www.soundjay.com/button/beep-13.wav')
+};
 
-// Get the area where the word will be displayed
+// Play audio for the word
+function playAudio(word) {
+    audioFiles[word].play();
+}
+
+// Game Logic
+let selectedImage = null;
+
+document.querySelectorAll('.game-item').forEach(item => {
+    item.addEventListener('click', function() {
+        if (selectedImage) {
+            if (this.id === `${selectedImage}-picture`) {
+                document.getElementById('message').textContent = `Correct! You matched the ${selectedImage}!`;
+            } else {
+                document.getElementById('message').textContent = `Oops! Try again!`;
+            }
+            selectedImage = null;
+        } else {
+            selectedImage = this.id.replace('-picture', '');
+        }
+    });
+});
+
+// Show word when clicking on pictures
+const wordItems = document.querySelectorAll('.word-item');
 const showWord = document.getElementById('show-word');
 
-// Add click event to each word item
 wordItems.forEach(item => {
     item.addEventListener('click', () => {
-        // Get the id of the clicked item and display the corresponding word
-        const id = item.id;
-        let word;
-
-        if (id === 'apple') {
-            word = 'Apple';
-        } else if (id === 'dog') {
-            word = 'Dog';
-        } else if (id === 'cat') {
-            word = 'Cat';
-        }
-
-        // Update the text content to show the word
-        showWord.textContent = `You selected: ${word}`;
+        const word = item.id;
+        showWord.textContent = `You selected: ${word.charAt(0).toUpperCase() + word.slice(1)}`;
     });
 });
