@@ -1,97 +1,94 @@
-// 食物数据库（直接嵌入在 JS 中）
-const foodDatabase = [
-  {
-    "id": "apple",
-    "name": "Apple",
-    "category": "Fruits",
-    "image": "https://via.placeholder.com/150?text=Apple",
-    "calories": 52,
-    "protein": 0.3,
-    "fat": 0.2,
-    "carbs": 14
-  },
-  {
-    "id": "banana",
-    "name": "Banana",
-    "category": "Fruits",
-    "image": "https://via.placeholder.com/150?text=Banana",
-    "calories": 96,
-    "protein": 1.3,
-    "fat": 0.3,
-    "carbs": 27
-  },
-  // 其他食物...
+const foods = [
+    // 谷薯类
+    { name: "Rice", category: "grains", image: "rice.jpg", calories: 130, protein: 2.7, carbs: 28, fat: 0.3 },
+    { name: "Potato", category: "grains", image: "potato.jpg", calories: 77, protein: 2.0, carbs: 17, fat: 0.1 },
+
+    // 蔬菜水果类
+    { name: "Apple", category: "vegetables_fruits", image: "apple.jpg", calories: 52, protein: 0.3, carbs: 14, fat: 0.2 },
+    { name: "Carrot", category: "vegetables_fruits", image: "carrot.jpg", calories: 41, protein: 0.9, carbs: 10, fat: 0.2 },
+
+    // 动物性食物
+    { name: "Chicken Breast", category: "animal_products", image: "chicken.jpg", calories: 165, protein: 31, carbs: 0, fat: 3.6 },
+
+    // 大豆及其制品
+    { name: "Tofu", category: "soy_products", image: "tofu.jpg", calories: 144, protein: 15.7, carbs: 3.9, fat: 8.0 },
+
+    // 纯能量食物
+    { name: "Olive Oil", category: "energy_foods", image: "olive_oil.jpg", calories: 884, protein: 0, carbs: 0, fat: 100 },
+    { name: "Butter", category: "energy_foods", image: "butter.jpg", calories: 717, protein: 0.9, carbs: 0.1, fat: 81.1 }
 ];
 
-// 计算BMR并根据活动水平计算每日热量需求
+// Calculate Nutrients (BMR and TDEE)
 function calculateNutrients() {
-    const age = parseInt(document.getElementById('age').value);
-    const height = parseInt(document.getElementById('height').value);
-    const weight = parseInt(document.getElementById('weight').value);
-    const gender = document.getElementById('gender').value;
-    const activity = parseFloat(document.getElementById('activity').value);
+    const age = parseInt(document.getElementById("age").value);
+    const height = parseInt(document.getElementById("height").value);
+    const weight = parseInt(document.getElementById("weight").value);
+    const gender = document.getElementById("gender").value;
+    const activity = parseFloat(document.getElementById("activity").value);
 
-    // 计算BMR（基础代谢率）
-    let bmr;
-    if (gender === 'male') {
-        bmr = 66 + (13.75 * weight) + (5 * height) - (6.75 * age);
+    // BMR calculation (Mifflin-St Jeor Equation)
+    let BMR;
+    if (gender === "male") {
+        BMR = 10 * weight + 6.25 * height - 5 * age + 5;
     } else {
-        bmr = 655 + (9.563 * weight) + (1.85 * height) - (4.676 * age);
+        BMR = 10 * weight + 6.25 * height - 5 * age - 161;
     }
 
-    // 计算每日热量需求
-    const dailyCalories = bmr * activity;
-    const dailyProtein = (dailyCalories * 0.15) / 4; // 15%热量来自蛋白质
-    const dailyFat = (dailyCalories * 0.30) / 9; // 30%热量来自脂肪
-    const dailyCarbs = (dailyCalories * 0.55) / 4; // 55%热量来自碳水化合物
+    // TDEE = BMR * Activity Level
+    const TDEE = BMR * activity;
 
-    // 显示结果
-    document.getElementById('calories-result').textContent = dailyCalories.toFixed(2);
-    document.getElementById('protein-result').textContent = dailyProtein.toFixed(2);
-    document.getElementById('fat-result').textContent = dailyFat.toFixed(2);
-    document.getElementById('carbs-result').textContent = dailyCarbs.toFixed(2);
+    // Display results
+    document.getElementById("calories-result").innerText = Math.round(TDEE);
+    document.getElementById("protein-result").innerText = Math.round(TDEE * 0.2 / 4);  // 20% protein
+    document.getElementById("fat-result").innerText = Math.round(TDEE * 0.3 / 9);      // 30% fat
+    document.getElementById("carbs-result").innerText = Math.round(TDEE * 0.5 / 4);     // 50% carbs
 }
 
-// 食物筛选功能
+// Filter food by category
 function filterFood(category) {
-    const filteredFoods = category === 'all' ? foodDatabase : foodDatabase.filter(food => food.category.toLowerCase() === category.toLowerCase());
+    const filteredFoods = category === 'all' ? foods : foods.filter(food => food.category === category);
     displayFoodItems(filteredFoods);
 }
 
-// 显示食物项
-function displayFoodItems(foods) {
-    const foodList = document.getElementById('food-list');
-    foodList.innerHTML = ''; // 清空当前食物列表
-    foods.forEach(food => {
-        const foodItem = document.createElement('div');
-        foodItem.classList.add('food-item');
+// Display food items
+function displayFoodItems(items) {
+    const foodList = document.getElementById("food-list");
+    foodList.innerHTML = "";
+    items.forEach(food => {
+        const foodItem = document.createElement("div");
+        foodItem.className = "food-item";
         foodItem.innerHTML = `
             <img src="${food.image}" alt="${food.name}">
             <h4>${food.name}</h4>
-            <button onclick="showFoodDetail('${food.id}')">View Details</button>
+            <p>Calories: ${food.calories} kcal</p>
         `;
+        foodItem.onclick = () => openModal(food);
         foodList.appendChild(foodItem);
     });
 }
 
-// 显示食物详情
-function showFoodDetail(foodId) {
-    const food = foodDatabase.find(item => item.id === foodId);
-    document.getElementById('food-name').textContent = food.name;
-    document.getElementById('food-image').src = food.image;
-    document.getElementById('food-calories').textContent = food.calories;
-    document.getElementById('food-protein').textContent = food.protein;
-    document.getElementById('food-fat').textContent = food.fat;
-    document.getElementById('food-carbs').textContent = food.carbs;
-
-    // 显示详情弹窗
-    document.getElementById('food-detail-modal').style.display = "block";
+// Open modal for food details
+function openModal(food) {
+    const modal = document.getElementById("food-modal");
+    const modalDetails = document.getElementById("food-modal-details");
+    modalDetails.innerHTML = `
+        <h3>${food.name}</h3>
+        <img src="${food.image}" alt="${food.name}" style="width: 100%; max-height: 300px; object-fit: cover;">
+        <p><strong>Calories:</strong> ${food.calories} kcal</p>
+        <p><strong>Protein:</strong> ${food.protein} g</p>
+        <p><strong>Carbs:</strong> ${food.carbs} g</p>
+        <p><strong>Fat:</strong> ${food.fat} g</p>
+    `;
+    modal.style.display = "flex";
 }
 
-// 关闭详情弹窗
-document.querySelector('.close-btn').onclick = () => {
-    document.getElementById('food-detail-modal').style.display = "none";
-};
+// Close modal
+function closeModal(event) {
+    if (event.target === document.getElementById("food-modal") || event.target.classList.contains('close-button')) {
+        const modal = document.getElementById("food-modal");
+        modal.style.display = "none";
+    }
+}
 
-// 默认显示所有食物
-filterFood('all');
+// Initially display all food items
+displayFoodItems(foods);
