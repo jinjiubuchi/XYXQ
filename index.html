@@ -3,62 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn Words - Fun Learning</title>
+    <title>Healthy Eating Education</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>Learn Words & Play Games</h1>
-        <p>Interactive learning with images and fun word games!</p>
+        <h1>Healthy Eating Education</h1>
+        <p>Learn about healthy food choices and make smart decisions!</p>
     </header>
 
+    <nav class="category-nav">
+        <ul>
+            <li><button class="category-button" onclick="filterFood('fruits')">Fruits</button></li>
+            <li><button class="category-button" onclick="filterFood('vegetables')">Vegetables</button></li>
+            <li><button class="category-button" onclick="filterFood('snacks')">Snacks</button></li>
+            <li><button class="category-button" onclick="filterFood('all')">All</button></li>
+        </ul>
+    </nav>
+
     <main>
-        <!-- Word Learning Section -->
-        <section class="word-game">
-            <h2>Learn New Words</h2>
-            <div class="word-item" id="apple">
-                <img src="https://via.placeholder.com/150?text=Apple" alt="Apple">
-                <p class="word">Apple</p>
-                <button class="audio-btn" onclick="playAudio('apple')">🔊</button>
-            </div>
-            <div class="word-item" id="dog">
-                <img src="https://via.placeholder.com/150?text=Dog" alt="Dog">
-                <p class="word">Dog</p>
-                <button class="audio-btn" onclick="playAudio('dog')">🔊</button>
-            </div>
-            <div class="word-item" id="cat">
-                <img src="https://via.placeholder.com/150?text=Cat" alt="Cat">
-                <p class="word">Cat</p>
-                <button class="audio-btn" onclick="playAudio('cat')">🔊</button>
-            </div>
-            <div class="word-item" id="banana">
-                <img src="https://via.placeholder.com/150?text=Banana" alt="Banana">
-                <p class="word">Banana</p>
-                <button class="audio-btn" onclick="playAudio('banana')">🔊</button>
-            </div>
-            <div class="word-item" id="ball">
-                <img src="https://via.placeholder.com/150?text=Ball" alt="Ball">
-                <p class="word">Ball</p>
-                <button class="audio-btn" onclick="playAudio('ball')">🔊</button>
-            </div>
+        <section class="intro">
+            <h2>Explore Different Foods</h2>
+            <p>Click on any food to learn more about its calories and nutritional value!</p>
         </section>
 
-        <!-- Drag and Drop Matching Game -->
-        <section class="matching-game">
-            <h2>Word Matching Game</h2>
-            <p>Drag the images to the correct word.</p>
-            <div id="gameArea" class="game-area">
-                <!-- Game items will be loaded here -->
+        <section class="food-items">
+            <h2>Foods to Explore</h2>
+            <div class="food-list" id="food-list">
+                <!-- Food items will be dynamically added here -->
             </div>
-            <button onclick="startGame()">Start Game</button>
-            <p id="gameFeedback"></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Fun Learning Platform</p>
+        <p>&copy; 2024 Healthy Eating Education</p>
     </footer>
+
+    <!-- Modal for showing detailed nutritional information -->
+    <div id="food-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="food-name"></h3>
+            <p><strong>Calories:</strong> <span id="calories"></span></p>
+            <p><strong>Protein:</strong> <span id="protein"></span></p>
+            <p><strong>Fat:</strong> <span id="fat"></span></p>
+            <p><strong>Carbohydrates:</strong> <span id="carbohydrates"></span></p>
+            <p><strong>Category:</strong> <span id="food-category"></span></p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
