@@ -1,22 +1,25 @@
-// 获取按钮元素
-const learnMoreBtn = document.getElementById('learnMoreBtn');
-const showMoreCoursesBtn = document.getElementById('showMoreCoursesBtn');
-const gameBtn = document.getElementById('gameBtn');
-const parentResourceBtn = document.getElementById('parentResourceBtn');
+// Get all the word-item elements
+const wordItems = document.querySelectorAll('.word-item');
 
-// 设置按钮点击事件
-learnMoreBtn.addEventListener('click', () => {
-    alert('这里可以跳转到课程详情页面！');
-});
+// Get the area where the word will be displayed
+const showWord = document.getElementById('show-word');
 
-showMoreCoursesBtn.addEventListener('click', () => {
-    alert('这里可以展示更多课程内容！');
-});
+// Add click event to each word item
+wordItems.forEach(item => {
+    item.addEventListener('click', () => {
+        // Get the id of the clicked item and display the corresponding word
+        const id = item.id;
+        let word;
 
-gameBtn.addEventListener('click', () => {
-    alert('进入游戏乐园！');
-});
+        if (id === 'apple') {
+            word = 'Apple';
+        } else if (id === 'dog') {
+            word = 'Dog';
+        } else if (id === 'cat') {
+            word = 'Cat';
+        }
 
-parentResourceBtn.addEventListener('click', () => {
-    alert('家长专区资源内容！');
+        // Update the text content to show the word
+        showWord.textContent = `You selected: ${word}`;
+    });
 });
