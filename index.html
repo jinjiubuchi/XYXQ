@@ -5,15 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learn Words - Fun Learning</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>Learn Words - Picture and Word Match</h1>
-        <p>Click on the pictures to learn new words!</p>
+        <h1>Learn Words & Play Games</h1>
+        <p>Interactive learning with images and fun word games!</p>
     </header>
 
     <main>
+        <!-- Word Learning Section -->
         <section class="word-game">
+            <h2>Learn New Words</h2>
             <div class="word-item" id="apple">
                 <img src="https://via.placeholder.com/150?text=Apple" alt="Apple">
                 <p class="word">Apple</p>
@@ -41,29 +44,16 @@
             </div>
         </section>
 
-        <section id="game-section">
-            <h2>Match the Picture to the Word!</h2>
-            <div class="game-area">
-                <div class="game-item" id="apple-picture">
-                    <img src="https://via.placeholder.com/150?text=Apple" alt="Apple">
-                </div>
-                <div class="game-item" id="dog-picture">
-                    <img src="https://via.placeholder.com/150?text=Dog" alt="Dog">
-                </div>
-                <div class="game-item" id="cat-picture">
-                    <img src="https://via.placeholder.com/150?text=Cat" alt="Cat">
-                </div>
-                <div class="game-item" id="banana-picture">
-                    <img src="https://via.placeholder.com/150?text=Banana" alt="Banana">
-                </div>
-                <div class="game-item" id="ball-picture">
-                    <img src="https://via.placeholder.com/150?text=Ball" alt="Ball">
-                </div>
+        <!-- Drag and Drop Matching Game -->
+        <section class="matching-game">
+            <h2>Word Matching Game</h2>
+            <p>Drag the images to the correct word.</p>
+            <div id="gameArea" class="game-area">
+                <!-- Game items will be loaded here -->
             </div>
-            <div id="message"></div>
+            <button onclick="startGame()">Start Game</button>
+            <p id="gameFeedback"></p>
         </section>
-
-        <p id="show-word"></p>
     </main>
 
     <footer>
