@@ -3,81 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthy Eating Education</title>
+    <title>Healthy Eating Guide</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Healthy Eating for Kids and Adults</h1>
-        <p>Learn to recognize healthy foods and their nutrition!</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>Healthy Eating</h1>
+            <p>Start your journey towards a balanced life with the right nutrition.</p>
+        </header>
 
-    <!-- Daily Calorie Calculator Section -->
-    <section class="calculator-section">
-        <h2>Calculate Your Daily Nutrient Needs</h2>
-        <form id="calculator-form">
-            <label for="age">Age:</label>
-            <input type="number" id="age" placeholder="Enter your age" required min="18" max="100" aria-label="Enter your age" /><br>
+        <!-- Daily Calorie Calculator -->
+        <section class="calculator">
+            <h2>Calculate Your Nutrient Needs</h2>
+            <form id="calculator-form">
+                <input type="number" id="age" placeholder="Age" aria-label="Age" />
+                <input type="number" id="height" placeholder="Height (cm)" aria-label="Height" />
+                <input type="number" id="weight" placeholder="Weight (kg)" aria-label="Weight" />
+                <select id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <select id="activity">
+                    <option value="1.2">Sedentary</option>
+                    <option value="1.375">Lightly Active</option>
+                    <option value="1.55">Moderately Active</option>
+                    <option value="1.725">Very Active</option>
+                </select>
+                <button type="button" onclick="calculateNutrients()">Calculate</button>
+            </form>
+        </section>
 
-            <label for="height">Height (cm):</label>
-            <input type="number" id="height" placeholder="Enter your height" required min="50" max="250" aria-label="Enter your height" /><br>
+        <!-- Results Section -->
+        <section class="results">
+            <h3>Your Recommended Nutrients</h3>
+            <div class="nutrients">
+                <p><strong>Calories:</strong> <span id="calories-result">-</span> kcal</p>
+                <p><strong>Protein:</strong> <span id="protein-result">-</span> g</p>
+                <p><strong>Fat:</strong> <span id="fat-result">-</span> g</p>
+                <p><strong>Carbs:</strong> <span id="carbs-result">-</span> g</p>
+            </div>
+        </section>
 
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" placeholder="Enter your weight" required min="10" max="500" aria-label="Enter your weight" /><br>
+        <!-- Food Categories -->
+        <nav class="category-nav">
+            <ul>
+                <li><button onclick="filterFood('grains')">谷薯类</button></li>
+                <li><button onclick="filterFood('vegetables_fruits')">蔬菜水果类</button></li>
+                <li><button onclick="filterFood('animal_products')">动物性食物</button></li>
+                <li><button onclick="filterFood('soy_products')">大豆及其制品</button></li>
+                <li><button onclick="filterFood('energy_foods')">纯能量食物</button></li>
+                <li><button onclick="filterFood('all')">All</button></li>
+            </ul>
+        </nav>
 
-            <label for="gender">Gender:</label>
-            <select id="gender" aria-label="Select your gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select><br>
+        <!-- Food List -->
+        <section id="food-list" class="food-list"></section>
+    </div>
 
-            <label for="activity">Activity Level:</label>
-            <select id="activity" aria-label="Select your activity level">
-                <option value="1.2">Sedentary (little or no exercise)</option>
-                <option value="1.375">Lightly active (light exercise/sports 1-3 days/week)</option>
-                <option value="1.55">Moderately active (moderate exercise/sports 3-5 days/week)</option>
-                <option value="1.725">Very active (hard exercise/sports 6-7 days a week)</option>
-            </select><br>
-
-            <button type="button" onclick="calculateNutrients()">Calculate</button>
-        </form>
-
-        <div id="nutrient-results" class="nutrient-results">
-            <h3>Your Recommended Daily Nutrient Intake:</h3>
-            <p><strong>Calories:</strong> <span id="calories-result">-</span> kcal</p>
-            <p><strong>Protein:</strong> <span id="protein-result">-</span> g</p>
-            <p><strong>Fat:</strong> <span id="fat-result">-</span> g</p>
-            <p><strong>Carbohydrates:</strong> <span id="carbs-result">-</span> g</p>
-        </div>
-
-        <h3>Food Recommendations</h3>
-        <div id="food-recommendations">
-            <p>Select a category to see the recommended foods based on your nutrient needs.</p>
-        </div>
-    </section>
-
-    <nav class="category-nav">
-        <ul>
-            <li><button class="category-button" onclick="filterFood('fruits')">Fruits</button></li>
-            <li><button class="category-button" onclick="filterFood('vegetables')">Vegetables</button></li>
-            <li><button class="category-button" onclick="filterFood('snacks')">Snacks</button></li>
-            <li><button class="category-button" onclick="filterFood('dairy')">Dairy</button></li>
-            <li><button class="category-button" onclick="filterFood('all')">All</button></li>
-        </ul>
-    </nav>
-
-    <section id="food-list"></section>
-
-    <!-- Modal for showing food details -->
-    <div id="food-detail-modal" class="modal">
+    <div id="food-modal" class="food-modal" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 id="food-name"></h2>
-            <img id="food-image" src="" alt="">
-            <p><strong>Calories:</strong> <span id="food-calories"></span></p>
-            <p><strong>Protein:</strong> <span id="food-protein"></span></p>
-            <p><strong>Fat:</strong> <span id="food-fat"></span></p>
-            <p><strong>Carbohydrates:</strong> <span id="food-carbs"></span></p>
+            <span class="close-button" onclick="closeModal()">×</span>
+            <div id="food-modal-details"></div>
         </div>
     </div>
 
