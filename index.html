@@ -16,16 +16,51 @@
         <section class="word-game">
             <div class="word-item" id="apple">
                 <img src="https://via.placeholder.com/150?text=Apple" alt="Apple">
-                <p class="word">Click me to learn the word</p>
+                <p class="word">Apple</p>
+                <button class="audio-btn" onclick="playAudio('apple')">🔊</button>
             </div>
             <div class="word-item" id="dog">
                 <img src="https://via.placeholder.com/150?text=Dog" alt="Dog">
-                <p class="word">Click me to learn the word</p>
+                <p class="word">Dog</p>
+                <button class="audio-btn" onclick="playAudio('dog')">🔊</button>
             </div>
             <div class="word-item" id="cat">
                 <img src="https://via.placeholder.com/150?text=Cat" alt="Cat">
-                <p class="word">Click me to learn the word</p>
+                <p class="word">Cat</p>
+                <button class="audio-btn" onclick="playAudio('cat')">🔊</button>
             </div>
+            <div class="word-item" id="banana">
+                <img src="https://via.placeholder.com/150?text=Banana" alt="Banana">
+                <p class="word">Banana</p>
+                <button class="audio-btn" onclick="playAudio('banana')">🔊</button>
+            </div>
+            <div class="word-item" id="ball">
+                <img src="https://via.placeholder.com/150?text=Ball" alt="Ball">
+                <p class="word">Ball</p>
+                <button class="audio-btn" onclick="playAudio('ball')">🔊</button>
+            </div>
+        </section>
+
+        <section id="game-section">
+            <h2>Match the Picture to the Word!</h2>
+            <div class="game-area">
+                <div class="game-item" id="apple-picture">
+                    <img src="https://via.placeholder.com/150?text=Apple" alt="Apple">
+                </div>
+                <div class="game-item" id="dog-picture">
+                    <img src="https://via.placeholder.com/150?text=Dog" alt="Dog">
+                </div>
+                <div class="game-item" id="cat-picture">
+                    <img src="https://via.placeholder.com/150?text=Cat" alt="Cat">
+                </div>
+                <div class="game-item" id="banana-picture">
+                    <img src="https://via.placeholder.com/150?text=Banana" alt="Banana">
+                </div>
+                <div class="game-item" id="ball-picture">
+                    <img src="https://via.placeholder.com/150?text=Ball" alt="Ball">
+                </div>
+            </div>
+            <div id="message"></div>
         </section>
 
         <p id="show-word"></p>
