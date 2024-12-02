@@ -14,9 +14,9 @@ const foods = [
     { name: "Tofu", category: "soy_products", image: "tofu.jpg", calories: 144, protein: 15.7, carbs: 3.9, fat: 8.0 },
 
     // 纯能量食物
-    { name: "Olive Oil", category: "energy_foods", image: "olive_oil.jpg", calories: 884, protein: 0, carbs: 0, fat: 100 },
-    { name: "Butter", category: "energy_foods", image: "butter.jpg", calories: 717, protein: 0.9, carbs: 0.1, fat: 81.1 }
+    { name: "Olive Oil", category: "energy_foods", image: "olive_oil.jpg", calories: 119, protein: 0, carbs: 0, fat: 13.5 }
 ];
+
 function calculateNutrients() {
     const age = parseInt(document.getElementById("age").value);
     const height = parseInt(document.getElementById("height").value);
