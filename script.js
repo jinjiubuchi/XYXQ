@@ -18,7 +18,6 @@ const foods = [
     { name: "Butter", category: "energy_foods", image: "butter.jpg", calories: 717, protein: 0.9, carbs: 0.1, fat: 81.1 }
 ];
 
-// Calculate Nutrients (BMR and TDEE)
 function calculateNutrients() {
     const age = parseInt(document.getElementById("age").value);
     const height = parseInt(document.getElementById("height").value);
@@ -37,20 +36,36 @@ function calculateNutrients() {
     // TDEE = BMR * Activity Level
     const TDEE = BMR * activity;
 
+    // Save the results to LocalStorage
+    localStorage.setItem("TDEE", Math.round(TDEE));
+    localStorage.setItem("protein", Math.round(TDEE * 0.2 / 4));
+    localStorage.setItem("fat", Math.round(TDEE * 0.3 / 9));
+    localStorage.setItem("carbs", Math.round(TDEE * 0.5 / 4));
+
     // Display results
     document.getElementById("calories-result").innerText = Math.round(TDEE);
-    document.getElementById("protein-result").innerText = Math.round(TDEE * 0.2 / 4);  // 20% protein
-    document.getElementById("fat-result").innerText = Math.round(TDEE * 0.3 / 9);      // 30% fat
-    document.getElementById("carbs-result").innerText = Math.round(TDEE * 0.5 / 4);     // 50% carbs
+    document.getElementById("protein-result").innerText = Math.round(TDEE * 0.2 / 4);
+    document.getElementById("fat-result").innerText = Math.round(TDEE * 0.3 / 9);
+    document.getElementById("carbs-result").innerText = Math.round(TDEE * 0.5 / 4);
 }
 
-// Filter food by category
+// Load saved data on page load
+window.onload = function() {
+    if (localStorage.getItem("TDEE")) {
+        document.getElementById("calories-result").innerText = localStorage.getItem("TDEE");
+        document.getElementById("protein-result").innerText = localStorage.getItem("protein");
+        document.getElementById("fat-result").innerText = localStorage.getItem("fat");
+        document.getElementById("carbs-result").innerText = localStorage.getItem("carbs");
+    }
+}
+
+// Display food items based on selected category
 function filterFood(category) {
     const filteredFoods = category === 'all' ? foods : foods.filter(food => food.category === category);
     displayFoodItems(filteredFoods);
 }
 
-// Display food items
+// Display the food items on the page
 function displayFoodItems(items) {
     const foodList = document.getElementById("food-list");
     foodList.innerHTML = "";
@@ -67,13 +82,13 @@ function displayFoodItems(items) {
     });
 }
 
-// Open modal for food details
+// Food Modal
 function openModal(food) {
     const modal = document.getElementById("food-modal");
     const modalDetails = document.getElementById("food-modal-details");
     modalDetails.innerHTML = `
-        <h3>${food.name}</h3>
-        <img src="${food.image}" alt="${food.name}" style="width: 100%; max-height: 300px; object-fit: cover;">
+        <h2>${food.name}</h2>
+        <img src="${food.image}" alt="${food.name}">
         <p><strong>Calories:</strong> ${food.calories} kcal</p>
         <p><strong>Protein:</strong> ${food.protein} g</p>
         <p><strong>Carbs:</strong> ${food.carbs} g</p>
@@ -82,13 +97,19 @@ function openModal(food) {
     modal.style.display = "flex";
 }
 
-// Close modal
 function closeModal(event) {
-    if (event.target === document.getElementById("food-modal") || event.target.classList.contains('close-button')) {
-        const modal = document.getElementById("food-modal");
+    const modal = document.getElementById("food-modal");
+    if (event.target === modal || event.target.classList.contains("close-button")) {
         modal.style.display = "none";
     }
 }
 
-// Initially display all food items
-displayFoodItems(foods);
+// 食物搜索功能
+function searchFood() {
+    const query = document.getElementById("food-search").value.toLowerCase();
+    const filteredFoods = foods.filter(food => food.name.toLowerCase().includes(query));
+    displayFoodItems(filteredFoods);
+}
+
+// 初次加载显示所有食物
+filterFood('all');
