@@ -1,20 +1,20 @@
 const foods = [
-    // 谷薯类
+    // Grains & Tubers
     { name: "Rice", category: "grains", image: "rice.jpg", calories: 130, protein: 2.7, carbs: 28, fat: 0.3, weight: 100 },
     { name: "Potato", category: "grains", image: "potato.jpg", calories: 77, protein: 2.0, carbs: 17, fat: 0.1, weight: 100 },
 
-    // 蔬菜水果类
+    // Vegetables & Fruits
     { name: "Apple", category: "vegetables_fruits", image: "apple.jpg", calories: 52, protein: 0.3, carbs: 14, fat: 0.2, weight: 100 },
     { name: "Carrot", category: "vegetables_fruits", image: "carrot.jpg", calories: 41, protein: 0.9, carbs: 10, fat: 0.2, weight: 100 },
 
-    // 动物性食物
+    // Animal Products
     { name: "Chicken Breast", category: "animal_products", image: "chicken.jpg", calories: 165, protein: 31, carbs: 0, fat: 3.6, weight: 100 },
     { name: "Egg", category: "animal_products", image: "egg.jpg", calories: 155, protein: 13, carbs: 1.1, fat: 10.6, weight: 50 },
 
-    // 大豆及其制品
+    // Soy Products
     { name: "Tofu", category: "soy_products", image: "tofu.jpg", calories: 144, protein: 15.7, carbs: 3.9, fat: 8.0, weight: 100 },
 
-    // 纯能量食物
+    // Energy Foods
     { name: "Olive Oil", category: "energy_foods", image: "olive_oil.jpg", calories: 119, protein: 0, carbs: 0, fat: 13.5, weight: 13 }
 ];
 
@@ -96,22 +96,19 @@ function openModal(food) {
         <p><strong>Fat:</strong> ${food.fat} g</p>
         <p><strong>Weight:</strong> ${food.weight} g</p>
     `;
-    modal.style.display = "flex";
+    modal.style.display = "block";
 }
 
-function closeModal(event) {
+function closeModal() {
     const modal = document.getElementById("food-modal");
-    if (event.target === modal || event.target.classList.contains("close-button")) {
-        modal.style.display = "none";
-    }
+    modal.style.display = "none";
 }
 
-// 食物搜索功能
 function searchFood() {
     const query = document.getElementById("food-search").value.toLowerCase();
     const filteredFoods = foods.filter(food => food.name.toLowerCase().includes(query));
     displayFoodItems(filteredFoods);
 }
 
-// 初次加载显示所有食物
-filterFood('all');
+// Initial display of all food items
+displayFoodItems(foods);
