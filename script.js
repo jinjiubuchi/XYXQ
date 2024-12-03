@@ -37,9 +37,18 @@ const foods = [
 
     // Legumes
     { name: "Lentils", category: "legumes", image: "lentils.jpg", calories: 116, protein: 9, carbs: 20, fat: 0.4, weight: 100 },
-    { name: "Chickpeas", category: "legumes", image: "chickpeas.jpg", calories: 164, protein: 8.9, carbs: 27.4, fat: 2.6, weight: 100 }
-];
+    { name: "Chickpeas", category: "legumes", image: "chickpeas.jpg", calories: 164, protein: 8.9, carbs: 27.4, fat: 2.6, weight: 100 },
 
+    // Additional Everyday Foods
+    { name: "Spinach", category: "vegetables_fruits", image: "spinach.jpg", calories: 23, protein: 2.9, carbs: 3.6, fat: 0.4, weight: 100 },
+    { name: "Cucumber", category: "vegetables_fruits", image: "cucumber.jpg", calories: 16, protein: 0.7, carbs: 3.6, fat: 0.1, weight: 100 },
+    { name: "Strawberries", category: "vegetables_fruits", image: "strawberries.jpg", calories: 32, protein: 0.7, carbs: 7.7, fat: 0.3, weight: 100 },
+    { name: "Greek Yogurt", category: "dairy", image: "greek_yogurt.jpg", calories: 59, protein: 10, carbs: 3.6, fat: 0.4, weight: 100 },
+    { name: "Cottage Cheese", category: "dairy", image: "cottage_cheese.jpg", calories: 98, protein: 11, carbs: 3.4, fat: 4.3, weight: 100 },
+    { name: "Peanut Butter", category: "energy_foods", image: "peanut_butter.jpg", calories: 588, protein: 25, carbs: 20, fat: 50, weight: 100 },
+    { name: "Chickpea Flour", category: "legumes", image: "chickpea_flour.jpg", calories: 387, protein: 22, carbs: 58, fat: 6, weight: 100 },
+    { name: "Quinoa", category: "grains", image: "quinoa.jpg", calories: 120, protein: 4.1, carbs: 21.3, fat: 1.9, weight: 100 }
+];
 
 function calculateNutrients() {
     const age = parseInt(document.getElementById("age").value);
