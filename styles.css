@@ -164,3 +164,18 @@ button:hover {
     font-weight: bold;
     cursor: pointer;
 }
+
+
+.qrcode {
+    position: absolute;
+    top: 20px; /* 距离顶部 20px */
+    right: 20px; /* 距离右边 20px */
+    z-index: 1000; /* 确保二维码在最前面 */
+}
+
+.qrcode-image {
+    width: 100px; /* 设置二维码宽度 */
+    height: 100px; /* 设置二维码高度 */
+    border-radius: 8px; /* 可选：使二维码图片角落变圆 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 可选：添加阴影效果 */
+}
